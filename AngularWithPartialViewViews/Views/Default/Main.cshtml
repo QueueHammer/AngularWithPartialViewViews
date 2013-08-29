@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Angualr with MVC Partials and Views";
+}
+<script type="text/javascript">
+  'use strict';
+
+  // Declare app level module which depends on filters, and services
+  angular.module('DemoApp', []).
+  config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.when('/view1', { templateUrl: 'partials/partialOne', controller: 'CtrlOne' });
+    $routeProvider.when('/view2', { templateUrl: 'partials/partialTwo', controller: 'CtrlOther' });
+    $routeProvider.when('/view3', { templateUrl: 'partials/partialThree', controller: 'CtrlOther' });
+    $routeProvider.when('/view4', { templateUrl: 'partials/partialFour', controller: 'CtrlOther' });
+    $routeProvider.otherwise({ redirectTo: '/view1' });
+  }])
+  //These controllers could/should be in a seperate module and .js file.
+  //They are here for demonstration and simplisity .
+  .factory('LoadCounter', function () {
+    return {
+      counts: {},
+      total: function () {
+        var total = 0;
+        for (var v in this.counts) { total += this.counts[v] !== undefined ? this.counts[v] : 0; }
+        return total;
+      }
+    };
+  })
+  .controller('CtrlOne', function ($scope, LoadCounter) {
+    $scope.title = 'Here\'s looking at View!';
+    $scope.caption = 'This is the first view loaded from a partial view from ASP.Net MVC4';
+    
+    if (LoadCounter.counts.view1) LoadCounter.counts.view1++
+    else LoadCounter.counts.view1 = 1;
+  })
+  .controller('CtrlOther', function ($scope, $location, LoadCounter) {
+    //Find our view and count it...
+    var regEx = /\/(\w+\d)/;
+    var path = $location.path();
+
+    //If its not the correct path then quit
+    if (!regEx.test(path)) return;
+    var key = regEx.exec(path)[1];
+    var counts = LoadCounter.counts;
+    counts[key] ? counts[key]++ : counts[key] = 1;
+    $scope.count = LoadCounter.counts;
+
+    //Get the total
+    $scope.total = LoadCounter.total();
+  });
+</script>
+
+<div class="container">
+  <div class="navbar-header">
+    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="#" class="navbar-brand">Angular View Demos</a>
+  </div>
+  <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#/view1">View One</a></li>
+      <li><a href="#/view2">View Two</a></li>
+      <li><a href="#/view3">View Three</a></li>
+      <li><a href="#/view4">View Four</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="row" ng-view>
+
+</div>
+
+<script type="text/javascript">
+  angular.bootstrap(document, ['DemoApp']);
+</script>

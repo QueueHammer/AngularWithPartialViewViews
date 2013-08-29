@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="container">
+  <div class="page-header">
+    <h1>Third View <small>Almost at the end...</small></h1>
+  </div>
+  <div class="progress progress-striped active">
+  <div class="progress-bar progress-bar-success" style="width: {{(100 * count.view1 / total).toFixed()}}%">
+    <span class="sr-only">35% Complete (success)</span>
+  </div>
+  <div class="progress-bar progress-bar-warning" style="width: {{(100 * count.view2 / total).toFixed()}}%">
+    <span class="sr-only">20% Complete (warning)</span>
+  </div>
+  <div class="progress-bar progress-bar-danger" style="width: {{(100 * count.view3 / total).toFixed()}}%">
+    <span class="sr-only">10% Complete (danger)</span>
+  </div>
+  <div class="progress-bar progress-bar-info" style="width: {{(100 * count.view4 / total).toFixed()}}%">
+    <span class="sr-only">10% Complete (danger)</span>
+  </div>
+</div>
+</div>

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>@ViewBag.Title</title>
+  <!-- These will be in all pages -->
+  @Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/bundles/bootstrap")
+  @Scripts.Render("~/bundles/angular")
+
+  <!-- These scripts will be from thew "Scripts" view -->
+  @RenderSection("scripts", required: false)
+
+  <!-- These styles will be in all pages -->
+  @Styles.Render("~/Content/bootstrap")
+  @Styles.Render("~/Content/css")
+</head>
+<body>
+  @RenderBody()
+</body>
+</html>
